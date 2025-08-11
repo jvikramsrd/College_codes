@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Chess Board</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ddd;
+        }
+        .chessboard {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            border: 2px solid #333;
+            box-sizing: border-box;
+        }
+        .square {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            font-weight: bold;
+            user-select: none;
+        }
+        .square.light {
+            background-color: #fff; /* White squares */
+        }
+        .square.dark {
+            background-color: #000; /* Black squares */
+        }
+        .piece.white {
+            color: #fff; /* White pieces on black squares */
+            text-shadow: 0 0 3px #000;
+        }
+        .piece.black {
+            color: #000; /* Black pieces on white squares */
+            text-shadow: 0 0 3px #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="chessboard">
+        <!-- Row 1 - Black major pieces -->
+        <div class="square dark"><div class="piece black">♜</div></div>
+        <div class="square light"><div class="piece black">♞</div></div>
+        <div class="square dark"><div class="piece black">♝</div></div>
+        <div class="square light"><div class="piece black">♛</div></div>
+        <div class="square dark"><div class="piece black">♚</div></div>
+        <div class="square light"><div class="piece black">♝</div></div>
+        <div class="square dark"><div class="piece black">♞</div></div>
+        <div class="square light"><div class="piece black">♜</div></div>
+
+        <!-- Row 2 - Black pawns -->
+        <div class="square light"><div class="piece black">♟</div></div>
+        <div class="square dark"><div class="piece black">♟</div></div>\\\
+        
+        <div class="square light"><div class="piece black">♟</div></div>
+        <div class="square dark"><div class="piece black">♟</div></div>
+        <div class="square light"><div class="piece black">♟</div></div>
+        <div class="square dark"><div class="piece black">♟</div></div>
+        <div class="square light"><div class="piece black">♟</div></div>
+        <div class="square dark"><div class="piece black">♟</div></div>
+
+        <!-- Rows 3 to 6 - empty squares -->
+        <div class="square dark"></div><div class="square light"></div><div class="square dark"></div><div class="square light"></div>
+        <div class="square dark"></div><div class="square light"></div><div class="square dark"></div><div class="square light"></div>
+
+        <div class="square light"></div><div class="square dark"></div><div class="square light"></div><div class="square dark"></div>
+        <div class="square light"></div><div class="square dark"></div><div class="square light"></div><div class="square dark"></div>
+
+        <div class="square dark"></div><div class="square light"></div><div class="square dark"></div><div class="square light"></div>
+        <div class="square dark"></div><div class="square light"></div><div class="square dark"></div><div class="square light"></div>
+
+        <div class="square light"></div><div class="square dark"></div><div class="square light"></div><div class="square dark"></div>
+        <div class="square light"></div><div class="square dark"></div><div class="square light"></div><div class="square dark"></div>
+
+        <!-- Row 7 - White pawns -->
+        <div class="square light"><div class="piece white">♙</div></div>
+        <div class="square dark"><div class="piece white">♙</div></div>
+        <div class="square light"><div class="piece white">♙</div></div>
+        <div class="square dark"><div class="piece white">♙</div></div>
+        <div class="square light"><div class="piece white">♙</div></div>
+        <div class="square dark"><div class="piece white">♙</div></div>
+        <div class="square light"><div class="piece white">♙</div></div>
+        <div class="square dark"><div class="piece white">♙</div></div>
+
+        <!-- Row 8 - White major pieces -->
+        <div class="square dark"><div class="piece white">♖</div></div>
+        <div class="square light"><div class="piece white">♘</div></div>
+        <div class="square dark"><div class="piece white">♗</div></div>
+        <div class="square light"><div class="piece white">♕</div></div>
+        <div class="square dark"><div class="piece white">♔</div></div>
+        <div class="square light"><div class="piece white">♗</div></div>
+        <div class="square dark"><div class="piece white">♘</div></div>
+        <div class="square light"><div class="piece white">♖</div></div>
+    </div>
+</body>
+</html>
+
+	
