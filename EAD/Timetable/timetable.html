@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Timetable</title>
+    <style>
+        /* Basic styling for a clean look */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #444;
+        }
+
+        /* Table styling */
+        .timetable {
+            width: 90%;
+            max-width: 1000px;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .timetable th, .timetable td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        /* Header styling */
+        .timetable th {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Body cell styling */
+        .timetable td {
+            background-color: #fff;
+            cursor: pointer; /* Indicates the cells are interactive */
+        }
+        
+        .timetable td:hover {
+            background-color: #f0f8ff; /* Light blue on hover */
+        }
+
+        /* Time column styling */
+        .time {
+            background-color: #f9f9f9;
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Button styling */
+        .controls {
+            margin-top: 25px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+        
+        button#resetBtn {
+            background-color: #dc3545; /* Red for reset */
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #status {
+            margin-top: 15px;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>My Weekly Timetable 🗓️</h1>
+
+    <table class="timetable" id="myTimetable">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="time">09:00 - 10:00</td>
+                <td contenteditable="true" id="cell-0-0">Math</td>
+                <td contenteditable="true" id="cell-0-1">Physics</td>
+                <td contenteditable="true" id="cell-0-2">Math</td>
+                <td contenteditable="true" id="cell-0-3">Physics</td>
+                <td contenteditable="true" id="cell-0-4">Lab</td>
+            </tr>
+            <tr>
+                <td class="time">10:00 - 11:00</td>
+                <td contenteditable="true" id="cell-1-0">English</td>
+                <td contenteditable="true" id="cell-1-1">Chemistry</td>
+                <td contenteditable="true" id="cell-1-2">English</td>
+                <td contenteditable="true" id="cell-1-3">Chemistry</td>
+                <td contenteditable="true" id="cell-1-4">Lab</td>
+            </tr>
+            <tr>
+                <td class="time">11:00 - 12:00</td>
+                <td contenteditable="true" id="cell-2-0">History</td>
+                <td contenteditable="true" id="cell-2-1">Biology</td>
+                <td contenteditable="true" id="cell-2-2">History</td>
+                <td contenteditable="true" id="cell-2-3">Biology</td>
+                <td contenteditable="true" id="cell-2-4">Sports</td>
+            </tr>
+            <tr>
+                <td class="time">12:00 - 01:00</td>
+                <td colspan="5" style="background-color:#f0f0f0; font-weight:bold;">Lunch Break</td>
+            </tr>
+            <tr>
+                <td class="time">01:00 - 02:00</td>
+                <td contenteditable="true" id="cell-3-0">Geography</td>
+                <td contenteditable="true" id="cell-3-1">Art</td>
+                <td contenteditable="true" id="cell-3-2">Geography</td>
+                <td contenteditable="true" id="cell-3-3">Music</td>
+                <td contenteditable="true" id="cell-3-4">Free Period</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="controls">
+        <button id="saveBtn">Save Changes</button>
+        <button id="resetBtn">Reset to Default</button>
+    </div>
+    <div id="status"></div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const timetable = document.getElementById('myTimetable');
+        const saveBtn = document.getElementById('saveBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const statusDiv = document.getElementById('status');
+        const storageKey = 'myTimetableData';
+
+        // Function to save table data to localStorage
+        function saveTable() {
+            const data = {};
+            // Find all editable cells and save their content
+            const cells = timetable.querySelectorAll('td[contenteditable="true"]');
+            cells.forEach(cell => {
+                data[cell.id] = cell.innerHTML;
+            });
+            // Store the data as a JSON string
+            localStorage.setItem(storageKey, JSON.stringify(data));
+
+            // Show a success message
+            statusDiv.textContent = 'Timetable saved successfully! ✨';
+            setTimeout(() => { statusDiv.textContent = ''; }, 3000); // Message disappears after 3 seconds
+        }
+
+        // Function to load table data from localStorage
+        function loadTable() {
+            const savedData = localStorage.getItem(storageKey);
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                for (const cellId in data) {
+                    const cell = document.getElementById(cellId);
+                    if (cell) {
+                        cell.innerHTML = data[cellId];
+                    }
+                }
+                statusDiv.textContent = 'Loaded your saved timetable.';
+                 setTimeout(() => { statusDiv.textContent = ''; }, 3000);
+            }
+        }
+
+        // Function to reset the table to its original state
+        function resetTable() {
+            if (confirm('Are you sure you want to reset the timetable? All your changes will be lost.')) {
+                localStorage.removeItem(storageKey); // Clear saved data
+                window.location.reload(); // Reload the page to show original content
+            }
+        }
+
+        // Event Listeners
+        saveBtn.addEventListener('click', saveTable);
+        resetBtn.addEventListener('click', resetTable);
+
+        // Load the saved data when the page loads
+        loadTable();
+    });
+</script>
+
+</body>
+</html>
