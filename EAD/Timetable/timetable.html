@@ -3,180 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable Timetable</title>
+    <title>Advanced Editable Timetable</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Basic styling for a clean look */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 20px;
+            background-color: #f8f9fa;
         }
-
-        h1 {
-            color: #444;
-        }
-
-        /* Table styling */
-        .timetable {
-            width: 90%;
-            max-width: 1000px;
-            border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        .timetable th, .timetable td {
-            border: 1px solid #ddd;
-            padding: 12px 15px;
-            text-align: center;
-        }
-
-        /* Header styling */
-        .timetable th {
-            background-color: #007BFF;
-            color: white;
-            font-weight: bold;
-        }
-
-        /* Body cell styling */
-        .timetable td {
-            background-color: #fff;
-            cursor: pointer; /* Indicates the cells are interactive */
-        }
-        
-        .timetable td:hover {
-            background-color: #f0f8ff; /* Light blue on hover */
-        }
-
-        /* Time column styling */
-        .time {
-            background-color: #f9f9f9;
-            font-weight: bold;
-            color: #555;
-        }
-
-        /* Button styling */
-        .controls {
-            margin-top: 25px;
-        }
-
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+        .timetable td[contenteditable="true"]:hover {
+            background-color: #e9ecef;
             cursor: pointer;
-            font-size: 16px;
-            margin: 0 10px;
-            transition: background-color 0.3s;
         }
-        
-        button#resetBtn {
-            background-color: #dc3545; /* Red for reset */
+        .time-header {
+            background-color: #6c757d;
+            color: white;
         }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        #status {
-            margin-top: 15px;
-            color: #28a745;
-            font-weight: bold;
-        }
-
     </style>
 </head>
 <body>
 
-    <h1>My Weekly Timetable 🗓️</h1>
+    <div class="container my-5">
+        <div class="text-center mb-4">
+            <h1 class="display-5">My Weekly Timetable 🗓️</h1>
+            <p class="lead">Click on any cell to edit. Use the import feature for quick setup.</p>
+        </div>
 
-    <table class="timetable" id="myTimetable">
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="time">09:00 - 10:00</td>
-                <td contenteditable="true" id="cell-0-0">Math</td>
-                <td contenteditable="true" id="cell-0-1">Physics</td>
-                <td contenteditable="true" id="cell-0-2">Math</td>
-                <td contenteditable="true" id="cell-0-3">Physics</td>
-                <td contenteditable="true" id="cell-0-4">Lab</td>
-            </tr>
-            <tr>
-                <td class="time">10:00 - 11:00</td>
-                <td contenteditable="true" id="cell-1-0">English</td>
-                <td contenteditable="true" id="cell-1-1">Chemistry</td>
-                <td contenteditable="true" id="cell-1-2">English</td>
-                <td contenteditable="true" id="cell-1-3">Chemistry</td>
-                <td contenteditable="true" id="cell-1-4">Lab</td>
-            </tr>
-            <tr>
-                <td class="time">11:00 - 12:00</td>
-                <td contenteditable="true" id="cell-2-0">History</td>
-                <td contenteditable="true" id="cell-2-1">Biology</td>
-                <td contenteditable="true" id="cell-2-2">History</td>
-                <td contenteditable="true" id="cell-2-3">Biology</td>
-                <td contenteditable="true" id="cell-2-4">Sports</td>
-            </tr>
-            <tr>
-                <td class="time">12:00 - 01:00</td>
-                <td colspan="5" style="background-color:#f0f0f0; font-weight:bold;">Lunch Break</td>
-            </tr>
-            <tr>
-                <td class="time">01:00 - 02:00</td>
-                <td contenteditable="true" id="cell-3-0">Geography</td>
-                <td contenteditable="true" id="cell-3-1">Art</td>
-                <td contenteditable="true" id="cell-3-2">Geography</td>
-                <td contenteditable="true" id="cell-3-3">Music</td>
-                <td contenteditable="true" id="cell-3-4">Free Period</td>
-            </tr>
-        </tbody>
-    </table>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>🚀 Import Data from Text</h3>
+            </div>
+            <div class="card-body">
+                <p>Copy your schedule from a PDF or text file, format it as shown below, and paste it here. Each line represents a time slot, with subjects separated by commas.</p>
+                <div class="form-group">
+                    <label for="dataInput" class="form-label"><b>Example Format:</b><br>
+                        <code>Math,Physics,Math,Physics,Lab</code><br>
+                        <code>English,Chemistry,English,Chemistry,Lab</code><br>
+                    </label>
+                    <textarea class="form-control" id="dataInput" rows="6" placeholder="Paste your data here..."></textarea>
+                </div>
+                <button id="importBtn" class="btn btn-info mt-3">Import Data</button>
+            </div>
+        </div>
 
-    <div class="controls">
-        <button id="saveBtn">Save Changes</button>
-        <button id="resetBtn">Reset to Default</button>
+        <table class="table table-bordered table-hover text-center" id="myTimetable">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width: 12%;">Time</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th class="time-header">09:00 - 10:00</th>
+                    <td contenteditable="true" id="cell-0-0"></td>
+                    <td contenteditable="true" id="cell-0-1"></td>
+                    <td contenteditable="true" id="cell-0-2"></td>
+                    <td contenteditable="true" id="cell-0-3"></td>
+                    <td contenteditable="true" id="cell-0-4"></td>
+                </tr>
+                <tr>
+                    <th class="time-header">10:00 - 11:00</th>
+                    <td contenteditable="true" id="cell-1-0"></td>
+                    <td contenteditable="true" id="cell-1-1"></td>
+                    <td contenteditable="true" id="cell-1-2"></td>
+                    <td contenteditable="true" id="cell-1-3"></td>
+                    <td contenteditable="true" id="cell-1-4"></td>
+                </tr>
+                <tr>
+                    <th class="time-header">11:00 - 12:00</th>
+                    <td contenteditable="true" id="cell-2-0"></td>
+                    <td contenteditable="true" id="cell-2-1"></td>
+                    <td contenteditable="true" id="cell-2-2"></td>
+                    <td contenteditable="true" id="cell-2-3"></td>
+                    <td contenteditable="true" id="cell-2-4"></td>
+                </tr>
+                <tr>
+                    <th class="time-header" colspan="6">12:00 - 01:00 &nbsp; | &nbsp; LUNCH BREAK</th>
+                </tr>
+                <tr>
+                    <th class="time-header">01:00 - 02:00</th>
+                    <td contenteditable="true" id="cell-3-0"></td>
+                    <td contenteditable="true" id="cell-3-1"></td>
+                    <td contenteditable="true" id="cell-3-2"></td>
+                    <td contenteditable="true" id="cell-3-3"></td>
+                    <td contenteditable="true" id="cell-3-4"></td>
+                </tr>
+                <tr>
+                    <th class="time-header">02:00 - 03:00</th>
+                    <td contenteditable="true" id="cell-4-0"></td>
+                    <td contenteditable="true" id="cell-4-1"></td>
+                    <td contenteditable="true" id="cell-4-2"></td>
+                    <td contenteditable="true" id="cell-4-3"></td>
+                    <td contenteditable="true" id="cell-4-4"></td>
+                </tr>
+                <tr>
+                    <th class="time-header">03:00 - 04:00</th>
+                    <td contenteditable="true" id="cell-5-0"></td>
+                    <td contenteditable="true" id="cell-5-1"></td>
+                    <td contenteditable="true" id="cell-5-2"></td>
+                    <td contenteditable="true" id="cell-5-3"></td>
+                    <td contenteditable="true" id="cell-5-4"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center mt-4">
+            <button id="saveBtn" class="btn btn-primary btn-lg mx-2">Save Changes</button>
+            <button id="resetBtn" class="btn btn-danger btn-lg mx-2">Reset to Default</button>
+        </div>
+        <div id="status" class="alert mt-3" role="alert" style="display: none;"></div>
     </div>
-    <div id="status"></div>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const timetable = document.getElementById('myTimetable');
         const saveBtn = document.getElementById('saveBtn');
         const resetBtn = document.getElementById('resetBtn');
+        const importBtn = document.getElementById('importBtn');
+        const dataInput = document.getElementById('dataInput');
         const statusDiv = document.getElementById('status');
-        const storageKey = 'myTimetableData';
+        const storageKey = 'myBootstrapTimetableData';
+
+        // Function to show a status message
+        function showStatus(message, type = 'success') {
+            statusDiv.textContent = message;
+            statusDiv.className = `alert alert-${type}`; // Bootstrap class
+            statusDiv.style.display = 'block';
+            setTimeout(() => { statusDiv.style.display = 'none'; }, 3000);
+        }
 
         // Function to save table data to localStorage
         function saveTable() {
             const data = {};
-            // Find all editable cells and save their content
             const cells = timetable.querySelectorAll('td[contenteditable="true"]');
             cells.forEach(cell => {
                 data[cell.id] = cell.innerHTML;
             });
-            // Store the data as a JSON string
             localStorage.setItem(storageKey, JSON.stringify(data));
-
-            // Show a success message
-            statusDiv.textContent = 'Timetable saved successfully! ✨';
-            setTimeout(() => { statusDiv.textContent = ''; }, 3000); // Message disappears after 3 seconds
+            showStatus('Timetable saved successfully! ✨', 'success');
         }
 
         // Function to load table data from localStorage
@@ -190,24 +157,46 @@
                         cell.innerHTML = data[cellId];
                     }
                 }
-                statusDiv.textContent = 'Loaded your saved timetable.';
-                 setTimeout(() => { statusDiv.textContent = ''; }, 3000);
             }
         }
 
-        // Function to reset the table to its original state
+        // Function to reset the table
         function resetTable() {
-            if (confirm('Are you sure you want to reset the timetable? All your changes will be lost.')) {
-                localStorage.removeItem(storageKey); // Clear saved data
-                window.location.reload(); // Reload the page to show original content
+            if (confirm('Are you sure you want to reset the timetable? All saved changes will be lost.')) {
+                localStorage.removeItem(storageKey);
+                window.location.reload();
             }
+        }
+
+        // Function to import data from the textarea
+        function importData() {
+            const text = dataInput.value.trim();
+            const lines = text.split('\n');
+            const editableRows = Array.from(timetable.querySelectorAll('tbody tr')).filter(tr => tr.querySelector('td[contenteditable="true"]'));
+
+            lines.forEach((line, rowIndex) => {
+                // Ensure we don't try to fill more rows than exist
+                if (rowIndex >= editableRows.length) return;
+                
+                const subjects = line.split(',');
+                const cells = editableRows[rowIndex].querySelectorAll('td[contenteditable="true"]');
+
+                subjects.forEach((subject, colIndex) => {
+                    // Ensure we don't try to fill more columns than exist
+                    if (colIndex < cells.length) {
+                        cells[colIndex].innerHTML = subject.trim();
+                    }
+                });
+            });
+            showStatus('Data imported successfully! Remember to save.', 'info');
         }
 
         // Event Listeners
         saveBtn.addEventListener('click', saveTable);
         resetBtn.addEventListener('click', resetTable);
+        importBtn.addEventListener('click', importData);
 
-        // Load the saved data when the page loads
+        // Load saved data when the page loads
         loadTable();
     });
 </script>
