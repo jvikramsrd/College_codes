@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fully Editable Timetable</title>
+    <title>Pivoted Timetable</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
         }
+        #main-content {
+            display: grid;
+            gap: 2rem;
+        }
+        /* Make table scrollable on small screens */
+        .table-responsive {
+            overflow-x: auto;
+        }
         .timetable td[contenteditable="true"]:hover {
             background-color: #e9ecef;
             cursor: pointer;
         }
-        /* Style for the editable time cells */
-        .time-cell {
+        .day-cell {
             background-color: #f8f9fa;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+        .time-header-cell {
             font-weight: bold;
             vertical-align: middle;
         }
@@ -25,98 +36,104 @@
 
     <div class="container my-5">
         <div class="text-center mb-4">
-            <h1 class="display-5">Fully Editable Timetable 🗓️</h1>
-            <p class="lead">Click on any cell, including the timings, to edit.</p>
+            <h1 class="display-5">Editable Timetable 🗓️</h1>
+            <p class="lead">Days are vertical, times are horizontal. Click any cell to edit.</p>
         </div>
 
-        <div class="card mb-4">
-            <div class="card-header">
-                <h3>🚀 Import Data from Text</h3>
+        <div id="main-content">
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center" id="myTimetable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="day-cell">Day</th>
+                            <td class="time-header-cell" contenteditable="true" id="time-0">09-10</td>
+                            <td class="time-header-cell" contenteditable="true" id="time-1">10-11</td>
+                            <td class="time-header-cell" contenteditable="true" id="time-2">11-12</td>
+                            <th class="table-secondary">12-01 LUNCH</th>
+                            <td class="time-header-cell" contenteditable="true" id="time-3">01-02</td>
+                            <td class="time-header-cell" contenteditable="true" id="time-4">02-03</td>
+                            <td class="time-header-cell" contenteditable="true" id="time-5">03-04</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="day-cell" contenteditable="true" id="day-0">Monday</td>
+                            <td contenteditable="true" id="cell-0-0"></td>
+                            <td contenteditable="true" id="cell-0-1"></td>
+                            <td contenteditable="true" id="cell-0-2"></td>
+                            <td class="table-secondary"></td>
+                            <td contenteditable="true" id="cell-0-3"></td>
+                            <td contenteditable="true" id="cell-0-4"></td>
+                            <td contenteditable="true" id="cell-0-5"></td>
+                        </tr>
+                        <tr>
+                            <td class="day-cell" contenteditable="true" id="day-1">Tuesday</td>
+                            <td contenteditable="true" id="cell-1-0"></td>
+                            <td contenteditable="true" id="cell-1-1"></td>
+                            <td contenteditable="true" id="cell-1-2"></td>
+                            <td class="table-secondary"></td>
+                            <td contenteditable="true" id="cell-1-3"></td>
+                            <td contenteditable="true" id="cell-1-4"></td>
+                            <td contenteditable="true" id="cell-1-5"></td>
+                        </tr>
+                        <tr>
+                            <td class="day-cell" contenteditable="true" id="day-2">Wednesday</td>
+                            <td contenteditable="true" id="cell-2-0"></td>
+                            <td contenteditable="true" id="cell-2-1"></td>
+                            <td contenteditable="true" id="cell-2-2"></td>
+                            <td class="table-secondary"></td>
+                            <td contenteditable="true" id="cell-2-3"></td>
+                            <td contenteditable="true" id="cell-2-4"></td>
+                            <td contenteditable="true" id="cell-2-5"></td>
+                        </tr>
+                        <tr>
+                            <td class="day-cell" contenteditable="true" id="day-3">Thursday</td>
+                            <td contenteditable="true" id="cell-3-0"></td>
+                            <td contenteditable="true" id="cell-3-1"></td>
+                            <td contenteditable="true" id="cell-3-2"></td>
+                            <td class="table-secondary"></td>
+                            <td contenteditable="true" id="cell-3-3"></td>
+                            <td contenteditable="true" id="cell-3-4"></td>
+                            <td contenteditable="true" id="cell-3-5"></td>
+                        </tr>
+                        <tr>
+                            <td class="day-cell" contenteditable="true" id="day-4">Friday</td>
+                            <td contenteditable="true" id="cell-4-0"></td>
+                            <td contenteditable="true" id="cell-4-1"></td>
+                            <td contenteditable="true" id="cell-4-2"></td>
+                            <td class="table-secondary"></td>
+                            <td contenteditable="true" id="cell-4-3"></td>
+                            <td contenteditable="true" id="cell-4-4"></td>
+                            <td contenteditable="true" id="cell-4-5"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="card-body">
-                <p>To quickly fill the schedule, paste your data below (subjects separated by commas). Note: This does not change the timings.</p>
-                <div class="form-group">
-                    <label for="dataInput" class="form-label"><b>Example Format:</b><br>
-                        <code>Math,Physics,Math,Physics,Lab</code><br>
-                        <code>English,Chemistry,English,Chemistry,Lab</code><br>
-                    </label>
-                    <textarea class="form-control" id="dataInput" rows="6" placeholder="Paste your subject data here..."></textarea>
+
+            <div class="text-center">
+                <button id="saveBtn" class="btn btn-primary btn-lg mx-2">Save Changes</button>
+                <button id="resetBtn" class="btn btn-danger btn-lg mx-2">Reset to Default</button>
+            </div>
+            <div id="status" class="alert mt-3" role="alert" style="display: none;"></div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>🚀 Import Data from Text</h3>
                 </div>
-                <button id="importBtn" class="btn btn-info mt-3">Import Subjects</button>
+                <div class="card-body">
+                    <p>Paste your schedule below. <b>Each line now represents a day's schedule</b> (e.g., Monday's subjects on the first line).</p>
+                    <div class="form-group">
+                        <label for="dataInput" class="form-label"><b>New Example Format (one line per day):</b><br>
+                            <code>Math,English,History,Databases,Software Eng,AI</code><br>
+                            <code>Physics,Chemistry,Biology,Networking,Web Dev,Project</code><br>
+                        </label>
+                        <textarea class="form-control" id="dataInput" rows="5" placeholder="Paste your subject data here..."></textarea>
+                    </div>
+                    <button id="importBtn" class="btn btn-info mt-3">Import Subjects</button>
+                </div>
             </div>
         </div>
-
-        <table class="table table-bordered table-hover text-center" id="myTimetable">
-            <thead class="table-dark">
-                <tr>
-                    <th style="width: 15%;">Time</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="time-cell" contenteditable="true" id="time-0">09:00 - 10:00</td>
-                    <td contenteditable="true" id="cell-0-0"></td>
-                    <td contenteditable="true" id="cell-0-1"></td>
-                    <td contenteditable="true" id="cell-0-2"></td>
-                    <td contenteditable="true" id="cell-0-3"></td>
-                    <td contenteditable="true" id="cell-0-4"></td>
-                </tr>
-                <tr>
-                    <td class="time-cell" contenteditable="true" id="time-1">10:00 - 11:00</td>
-                    <td contenteditable="true" id="cell-1-0"></td>
-                    <td contenteditable="true" id="cell-1-1"></td>
-                    <td contenteditable="true" id="cell-1-2"></td>
-                    <td contenteditable="true" id="cell-1-3"></td>
-                    <td contenteditable="true" id="cell-1-4"></td>
-                </tr>
-                <tr>
-                    <td class="time-cell" contenteditable="true" id="time-2">11:00 - 12:00</td>
-                    <td contenteditable="true" id="cell-2-0"></td>
-                    <td contenteditable="true" id="cell-2-1"></td>
-                    <td contenteditable="true" id="cell-2-2"></td>
-                    <td contenteditable="true" id="cell-2-3"></td>
-                    <td contenteditable="true" id="cell-2-4"></td>
-                </tr>
-                <tr>
-                    <th class="table-secondary" colspan="6">12:00 - 01:00 &nbsp; | &nbsp; LUNCH BREAK</th>
-                </tr>
-                <tr>
-                    <td class="time-cell" contenteditable="true" id="time-3">01:00 - 02:00</td>
-                    <td contenteditable="true" id="cell-3-0"></td>
-                    <td contenteditable="true" id="cell-3-1"></td>
-                    <td contenteditable="true" id="cell-3-2"></td>
-                    <td contenteditable="true" id="cell-3-3"></td>
-                    <td contenteditable="true" id="cell-3-4"></td>
-                </tr>
-                <tr>
-                    <td class="time-cell" contenteditable="true" id="time-4">02:00 - 03:00</td>
-                    <td contenteditable="true" id="cell-4-0"></td>
-                    <td contenteditable="true" id="cell-4-1"></td>
-                    <td contenteditable="true" id="cell-4-2"></td>
-                    <td contenteditable="true" id="cell-4-3"></td>
-                    <td contenteditable="true" id="cell-4-4"></td>
-                </tr>
-                <tr>
-                    <td class="time-cell" contenteditable="true" id="time-5">03:00 - 04:00</td>
-                    <td contenteditable="true" id="cell-5-0"></td>
-                    <td contenteditable="true" id="cell-5-1"></td>
-                    <td contenteditable="true" id="cell-5-2"></td>
-                    <td contenteditable="true" id="cell-5-3"></td>
-                    <td contenteditable="true" id="cell-5-4"></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="text-center mt-4">
-            <button id="saveBtn" class="btn btn-primary btn-lg mx-2">Save Changes</button>
-            <button id="resetBtn" class="btn btn-danger btn-lg mx-2">Reset to Default</button>
-        </div>
-        <div id="status" class="alert mt-3" role="alert" style="display: none;"></div>
     </div>
 
 <script>
@@ -127,20 +144,17 @@
         const importBtn = document.getElementById('importBtn');
         const dataInput = document.getElementById('dataInput');
         const statusDiv = document.getElementById('status');
-        const storageKey = 'myFullEditableTimetableData';
+        const storageKey = 'myPivotedTimetableData'; // New key for new layout
 
-        // Function to show a status message
         function showStatus(message, type = 'success') {
             statusDiv.textContent = message;
-            statusDiv.className = `alert alert-${type}`; // Bootstrap class
+            statusDiv.className = `alert alert-${type}`;
             statusDiv.style.display = 'block';
             setTimeout(() => { statusDiv.style.display = 'none'; }, 3000);
         }
 
-        // Function to save table data to localStorage
         function saveTable() {
             const data = {};
-            // This query now also finds the editable time cells
             const cells = timetable.querySelectorAll('td[contenteditable="true"]');
             cells.forEach(cell => {
                 data[cell.id] = cell.innerHTML;
@@ -149,7 +163,6 @@
             showStatus('Timetable saved successfully! ✨', 'success');
         }
 
-        // Function to load table data from localStorage
         function loadTable() {
             const savedData = localStorage.getItem(storageKey);
             if (savedData) {
@@ -163,42 +176,38 @@
             }
         }
 
-        // Function to reset the table
         function resetTable() {
-            if (confirm('Are you sure you want to reset the timetable? All saved changes will be lost.')) {
+            if (confirm('Are you sure you want to reset? All saved changes will be lost.')) {
                 localStorage.removeItem(storageKey);
                 window.location.reload();
             }
         }
 
-        // Function to import data from the textarea
         function importData() {
             const text = dataInput.value.trim();
-            const lines = text.split('\n');
-            const editableRows = Array.from(timetable.querySelectorAll('tbody tr')).filter(tr => tr.querySelector('td[contenteditable="true"]'));
+            const lines = text.split('\n'); // Each line is a day
+            const dayRows = timetable.querySelectorAll('tbody tr');
 
             lines.forEach((line, rowIndex) => {
-                if (rowIndex >= editableRows.length) return;
+                if (rowIndex >= dayRows.length) return;
                 
                 const subjects = line.split(',');
-                // Selects only subject cells, skipping the time cell
-                const cells = editableRows[rowIndex].querySelectorAll('td:not(.time-cell)');
+                // Get all subject cells in the current day's row
+                const subjectCells = dayRows[rowIndex].querySelectorAll('td[id^="cell-"]');
 
                 subjects.forEach((subject, colIndex) => {
-                    if (colIndex < cells.length) {
-                        cells[colIndex].innerHTML = subject.trim();
+                    if (colIndex < subjectCells.length) {
+                        subjectCells[colIndex].innerHTML = subject.trim();
                     }
                 });
             });
             showStatus('Subjects imported successfully! Remember to save.', 'info');
         }
 
-        // Event Listeners
         saveBtn.addEventListener('click', saveTable);
         resetBtn.addEventListener('click', resetTable);
         importBtn.addEventListener('click', importData);
 
-        // Load saved data when the page loads
         loadTable();
     });
 </script>
