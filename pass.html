@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Password Strength Checker</title>
+    </head>
+    <body>
+        <h2>Password Strength Checker</h2>
+        <input type="password" id="password" placeholder="Enter Password" />
+        <p id="strength"></p>
+        <script>
+            const password = document.getElementById("password");
+            const strength = document.getElementById("strength");
+            password.addEventListener("input", () => {
+                const val = password.value;
+                let score = 0;
+                if (val.match(/[a-z]/)) score++;
+                if (val.match(/[A-Z]/)) score++;
+                if (val.match(/[0-9]/)) score++;
+                if (val.match(/[^a-zA-Z0-9]/)) score++;
+                if (val.length > 8) score++;
+                const levels = [
+                    "Weak",
+                    "Fair",
+                    "Good",
+                    "Strong",
+                    "Very Strong",
+                ];
+                strength.textContent = levels[score - 1] || "";
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+    <body>
+        <input
+            type="text"
+            id="screen"
+            style="width: 100%; margin-bottom: 5px"
+        />
+
+        <table width="50%">
+            <tr>
+                <td><button onclick="screen.value += '1'">1</button></td>
+                <td><button onclick="screen.value += '2'">2</button></td>
+                <td><button onclick="screen.value += '3'">3</button></td>
+                <td><button onclick="screen.value += '+'">+</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="screen.value += '4'">4</button></td>
+                <td><button onclick="screen.value += '5'">5</button></td>
+                <td><button onclick="screen.value += '6'">6</button></td>
+                <td><button onclick="screen.value += '-'">-</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="screen.value += '7'">7</button></td>
+                <td><button onclick="screen.value += '8'">8</button></td>
+                <td><button onclick="screen.value += '9'">9</button></td>
+                <td><button onclick="screen.value += '*'">*</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="screen.value = ''">C</button></td>
+                <td><button onclick="screen.value += '0'">0</button></td>
+                <td>
+                    <button onclick="screen.value = eval(screen.value)">
+                        =
+                    </button>
+                </td>
+                <td><button onclick="screen.value += '/'">/</button></td>
+            </tr>
+        </table>
+
+        <script>
+            var screen = document.getElementById("screen");
+        </script>
+    </body>
+</html>
+ 

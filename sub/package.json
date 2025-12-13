@@ -1,0 +1,17 @@
+{
+  "name": "sub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sub.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "mongoos": "^0.0.1-security",
+    "mongoose": "^9.0.1"
+  }
+}
